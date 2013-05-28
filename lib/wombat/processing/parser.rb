@@ -1,8 +1,6 @@
 #coding: utf-8
 require 'wombat/property/locators/factory'
 require 'wombat/processing/node_selector'
-require 'mechanize'
-require 'restclient'
 
 module Nokogiri
   module XML
@@ -30,16 +28,15 @@ module Wombat
 
       private
       def parser_for(metadata)
-        url = "#{metadata[:base_url]}#{metadata[:path]}"
-        page = nil
+        @page = nil
         parser = nil
         begin
           if metadata[:document_format] == :html
-            @page = @mechanize.get(url)
+            @page = Wombat::Clients::Html.new(@mechanize, metadata).page
             parser = @page.parser
             parser.headers = @page.header
           else
-            @page = RestClient.get(url)
+            @page = Wombat::Clients::Rest.new(metadata).page
             parser = Nokogiri::XML @page
             parser.headers = @page.headers
           end

@@ -28,11 +28,11 @@ describe Wombat::Processing::Parser do
     fake_headers = double :headers
     @metadata.document_format :xml
     @parser.mechanize.should_not_receive(:get)
-    RestClient.should_receive(:get).and_return fake_document
+    ::RestClient::Request.should_receive(:execute).and_return fake_document
     Nokogiri.should_receive(:XML).with(fake_document).and_return fake_parser
     fake_document.should_receive(:headers).and_return(fake_headers)
     fake_parser.should_receive(:headers=)
-    
+
     @parser.parse @metadata
   end
 end

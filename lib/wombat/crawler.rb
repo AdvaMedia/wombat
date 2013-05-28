@@ -1,6 +1,9 @@
 #coding: utf-8
 require 'wombat/dsl/metadata'
 require 'wombat/dsl/property'
+require 'wombat/clients/base'
+require 'wombat/clients/rest'
+require 'wombat/clients/html'
 require 'wombat/processing/parser'
 require 'active_support'
 require 'date'
